@@ -1,7 +1,7 @@
 Deployment
 ==========
 
-## 1) Pre-requesites
+## 1) Pre-requisites
 * PHP >=7.1.3
 * MySQL
 * Laravel
