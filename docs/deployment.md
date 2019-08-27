@@ -4,7 +4,7 @@ Deployment
 ## 1) Pre-requisites
 * PHP >=7.1.3
 * MySQL
-* Laravel
+* Laravel ~5.8
 * Composer
 * API accounts:
   * [OpenCageData.com](http://www.opencagedata.com)
