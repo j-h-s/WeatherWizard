@@ -6,9 +6,9 @@ Deployment
 * MySQL
 * Laravel ~5.8
 * Composer
-* API accounts:
+* API accounts (unpaid or otherwise):
   * [OpenCageData.com](http://www.opencagedata.com)
-  * any or all of the follwoing:
+  * any or all of the following:
     * [OpenWeatherMap.org](http://www.openweathermap.org/api)
     * [DarkSky.net](http://www.darksky.net/dev)
     * [Apixu.com](http://www.apixu.com)
