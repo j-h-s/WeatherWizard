@@ -67,7 +67,11 @@ class OpenCageDataService extends DatabaseService
         Log::info("Calling " . $this->apiName . " API for " . $args['name']);
         $url  = $this->getUrl($args);
         $data = $this->connect->getData($url, $this->apiName);
-        sleep(1); // opencagedata allows 1 call/second, so sleep just to be safe
+
+        // if using a free account
+        if (env('API_LIMIT_OPENCAGEDATA') == 2500) {
+            sleep(1); // unpaid accounts are limited to 1 call/second
+        }
 
         if (!$data || empty($data)) {
             Log::info($this->apiName . " data not found for " . $args['name']);

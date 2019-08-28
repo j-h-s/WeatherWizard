@@ -74,6 +74,11 @@ class OpenWeatherMapService extends DatabaseService
         $url  = $this->getUrl($args['city']);
         $data = $this->connect->getData($url, $this->apiName);
 
+        // if using a free account
+        if (env('API_LIMIT_OPENWEATHERMAP') == 1440) {
+            sleep(1); // unpaid accounts are limited to 60 calls/minute
+        }
+
         if (!$data) {
             Log::info($this->apiName . " forecast data not found for " . $args['city']->name);
             return false;

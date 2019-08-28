@@ -193,10 +193,17 @@ class DatabaseService
                          ->where('provider', $api)
                          ->first();
 
+        // if no info in db, create new
         if (!$data) {
             $data = $this->createRateLimit($api);
         }
 
+        // if creating new info failed
+        if (!$data) {
+            return true;
+        }
+
+        // if rate limit reached or exceeded
         if ($data->calls >= $data->limit -2) { // give ourselves some wiggle room
             Log::info($api . " - Rate limit reached!");
             return true;
@@ -216,34 +223,34 @@ class DatabaseService
      */
     private function createRateLimit($api) {
         Log::debug("Creating new rate limit data for " . $api);
+
+        switch ($api) {
+            case env('API_NAME_ACCUWEATHER'):
+                $limit = env('API_LIMIT_ACCUWEATHER');
+                break;
+            case env('API_NAME_APIXU'):
+                $limit = env('API_LIMIT_APIXU');
+                break;
+            case env('API_NAME_DARKSKY'):
+                $limit = env('API_LIMIT_DARKSKY');
+                break;
+            case env('API_NAME_OPENWEATHERMAP'):
+                $limit = env('API_LIMIT_OPENWEATHERMAP');
+                break;
+            case env('API_NAME_OPENCAGEDATA'):
+                $limit = env('API_LIMIT_OPENCAGEDATA');
+                break;
+            default:
+                Log::notice($api . " rate limit information missing");
+                return null;
+        }
+
         $data           = new RateLimit();
         $data->date     = date('Y-m-d');
         $data->provider = $api;
-
-        switch ($api) {
-            // accuweather - 50 free calls/day (inc. location api)
-            case env('API_NAME_ACCUWEATHER'):
-                $data->limit = env('API_LIMIT_ACCUWEATHER');
-                break;
-            // apixu - 10,000 free calls/month (~330/day)
-            case env('API_NAME_APIXU'):
-                $data->limit = env('API_LIMIT_APIXU');
-                break;
-            // darksky - 1,000 free calls/day
-            case env('API_NAME_DARKSKY'):
-                $data->limit = env('API_LIMIT_DARKSKY');
-                break;
-            // openweathermap - 60 free calls/minute (1,440/day)
-            case env('API_NAME_OPENWEATHERMAP'):
-                $data->limit = env('API_LIMIT_OPENWEATHERMAP');
-                break;
-            // opencagedata - 2500 free calls/day
-            case env('API_NAME_OPENCAGEDATA'):
-                $data->limit = env('API_LIMIT_OPENCAGEDATA');
-                break;
-        }
-
+        $data->limit    = $limit;
         $data->save();
+
         return $data;
     }
 }
