@@ -1,7 +1,7 @@
 Deployment
 ==========
 
-## 1) Pre-requisites
+## 1) Prerequisites
 * PHP >=7.1.3
 * MySQL
 * Laravel ~5.8
@@ -21,15 +21,19 @@ Deployment
   * `cd WeatherWizard`
 * Install dependencies
   * `composer install`
-* Create the .env file
-  * `cp .env.example .env`
 
 ## 3) Setup
+* Create the database
+  * `mysql -u <username> -p <password>`
+  * `create database <database>;`
+  * `exit;`
+* Create the .env file
+  * `cp .env.example .env`
 * Modify the .env file to update the following:
   * database name
   * db username
   * db password
   * API keys
-    * Note: API limits are accurate for free accounts and should be altered for paid accounts
+    * note: API limits are accurate for free accounts and should be altered for paid accounts
 * Setup the database
   * `php artisan migrate:fresh`
