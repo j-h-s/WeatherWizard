@@ -16,9 +16,9 @@ Deployment
 
 ## 2) Installation
 * Clone the repository
-  * `git clone https://github.com/j-h-s/WeatherWizard.git`
+  * `git clone https://github.com/j-h-s/weather-wizard.git`
 * Navigate into the app directory
-  * `cd WeatherWizard`
+  * `cd weather-wizard`
 * Install dependencies
   * `composer install`
 
